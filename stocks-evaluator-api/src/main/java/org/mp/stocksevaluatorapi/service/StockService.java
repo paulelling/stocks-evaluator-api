@@ -1,8 +1,12 @@
 package org.mp.stocksevaluatorapi.service;
 
 import org.mp.stocksevaluatorapi.api.model.Stock;
+import org.mp.stocksevaluatorapi.repository.Database;
 import org.springframework.stereotype.Service;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,10 +17,13 @@ public class StockService {
 
     private List<Stock> stockList;
 
-    public StockService() {
+    public StockService() throws ParserConfigurationException, IOException, SAXException {
         this.stockList = new ArrayList<>();
 
-        Stock stock1 = new Stock("IBM", "IBM");
+        Database database = new Database();
+        String company = database.GetStock();
+
+        Stock stock1 = new Stock("IBM", company);
         Stock stock2 = new Stock("MSFT", "Microsoft");
         Stock stock3 = new Stock("F", "Ford");
 
