@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.xml.sax.SAXException;
 
-import java.util.Optional;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 public class StockController {
@@ -22,11 +26,13 @@ public class StockController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/stock")
-    public Stock getStock(@RequestParam String ticker) {
-        Optional stock = stockService.getStock(ticker);
-        if (stock.isPresent()) {
-            return (Stock) stock.get();
-        }
-        return null;
+    public Stock getStock(@RequestParam String ticker) throws ParserConfigurationException, IOException, SAXException, SQLException {
+        return stockService.getStock(ticker);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/stocks")
+    public List<Stock> getStocks() throws ParserConfigurationException, IOException, SAXException, SQLException {
+        return stockService.getStockList();
     }
 }

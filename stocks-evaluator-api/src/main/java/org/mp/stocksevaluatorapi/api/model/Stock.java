@@ -5,6 +5,8 @@ public class Stock {
     private String ticker;
     private String company;
 
+    public Stock() {}
+
     public Stock(String ticker, String company) {
         this.ticker = ticker;
         this.company = company;

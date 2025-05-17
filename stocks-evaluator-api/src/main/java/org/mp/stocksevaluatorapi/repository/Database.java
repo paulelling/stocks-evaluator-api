@@ -19,21 +19,15 @@ public class Database {
         logging = new Logging();
     }
 
-    public String GetStock() {
+    public ResultSet executeQuery(String query) throws ParserConfigurationException, IOException, SAXException {
         Connection con = null;
 
         try {
             con = DriverManager.getConnection(connectionString);
             Statement stmt = con.createStatement();
-            String sql = "SELECT Company FROM Stock";
+            String sql = query;
             ResultSet rs = stmt.executeQuery(sql);
-            String company = "";
-
-            if (rs.next()) {
-                company = rs.getString("Company");
-            }
-
-            return company;
+            return rs;
         } catch (SQLException e) {
             logging.Write(e.getMessage());
             return null;
