@@ -26,13 +26,29 @@ public class StockController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/stock")
-    public Stock getStock(@RequestParam String ticker) throws ParserConfigurationException, IOException, SAXException, SQLException {
-        return stockService.getStock(ticker);
+    public Stock getStock(@RequestParam String ticker) throws IOException, ParserConfigurationException, SAXException {
+        Stock stock = stockService.getStock(ticker);
+        return stock;
     }
+
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @GetMapping("/stock")
+//    public Stock getStock(@RequestParam String ticker) throws ParserConfigurationException, IOException, SAXException, SQLException {
+//        return stockService.getStock(ticker);
+//    }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/stocks")
     public List<Stock> getStocks() throws ParserConfigurationException, IOException, SAXException, SQLException {
         return stockService.getStockList();
     }
+
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @GetMapping("/testapi")
+//    public String callApi() throws IOException {
+//        AlphaVantage alphaVantage = new AlphaVantage();
+//        return alphaVantage.getStockData("IBM");
+//    }
+
+
 }

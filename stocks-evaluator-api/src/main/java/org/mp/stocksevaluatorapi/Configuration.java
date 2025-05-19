@@ -18,6 +18,9 @@ public class Configuration {
     private String databaseConnectionString;
     private String clientUrl;
     private String logFile;
+    private String financialModelingPrepApiKey;
+    private String finnhubToken;
+    private String marketStackAccessKey;
 
     public Configuration() {
         configurationFile = "D:\\GitHub\\paulelling\\stocks-evaluator-api\\stocks-evaluator-api\\src\\main\\java\\org\\mp\\stocksevaluatorapi\\app.configuration.xml";
@@ -36,6 +39,21 @@ public class Configuration {
     public String GetLogFile() throws ParserConfigurationException, IOException, SAXException {
         logFile = readConfigurationFile("log", "file");
         return logFile;
+    }
+
+    public String GetFinancialModelingPrepApiKey() throws ParserConfigurationException, IOException, SAXException {
+        financialModelingPrepApiKey = readConfigurationFile("financial_modeling_prep", "api_key");
+        return financialModelingPrepApiKey;
+    }
+
+    public String GetFinnhubToken() throws ParserConfigurationException, IOException, SAXException {
+        finnhubToken = readConfigurationFile("finnhub", "token");
+        return finnhubToken;
+    }
+
+    public String GetMarketStackAccessKey() throws ParserConfigurationException, IOException, SAXException {
+        marketStackAccessKey = readConfigurationFile("marketstack", "access_key");
+        return marketStackAccessKey;
     }
 
     private String readConfigurationFile(String configurationFileSection, String node) throws ParserConfigurationException, IOException, SAXException {

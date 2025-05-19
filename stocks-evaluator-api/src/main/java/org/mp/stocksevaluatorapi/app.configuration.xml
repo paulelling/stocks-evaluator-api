@@ -9,4 +9,13 @@
     <log>
         <file>D:\GitHub\paulelling\Java\MachineProgramsAPI\src\main\java\org\mp\machineprogramsapi\log.txt</file>
     </log>
+    <financial_modeling_prep>
+        <api_key>XISlNML7kUeFhwRiv6clz97ItcctsSCh</api_key>
+    </financial_modeling_prep>
+    <finnhub>
+        <token>d0l0fchr01qhb025hakgd0l0fchr01qhb025hal0</token>
+    </finnhub>
+    <marketstack>
+        <access_key>dc20a0fed1d832877d769662db3c4b56</access_key>
+    </marketstack>
 </app>
