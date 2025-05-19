@@ -1,6 +1,7 @@
 package org.mp.stocksevaluatorapi.api.model;
 
 import org.json.JSONObject;
+import org.mp.stocksevaluatorapi.api.performance.CashFlow;
 
 import java.math.BigDecimal;
 
@@ -27,6 +28,20 @@ public class Stock {
     private BalanceSheet balanceSheet;
     private IncomeStatement incomeStatement;
     private CashFlowStatement cashFlowStatement;
+    private Double qualityOfIncomeRatio;
+    private Double currentRatio;
+    private Double cashRatio;
+    private Double netAssetValue;
+    private Double totalDebtRatio;
+    private Double debtEquityRatio;
+    private Double equityMultiplier;
+    private Double financialLeverageRatio;
+    private Double longTermDebtRatio;
+    private Double returnOnAssets;
+    private Double returnOnEquity;
+    private Double sharesOutstanding;
+    private Double earningsYield;
+    private Double priceEarningsRatio;
 
     public Stock() {}
 
@@ -200,6 +215,117 @@ public class Stock {
 
     public void setCashFlowStatement(CashFlowStatement cashFlowStatement) {
         this.cashFlowStatement = cashFlowStatement;
+    }
+
+    public Double getQualityOfIncomeRatio() {
+        return qualityOfIncomeRatio;
+    }
+
+    public void setQualityOfIncomeRatio(Double qualityOfIncomeRatio) {
+        this.qualityOfIncomeRatio = qualityOfIncomeRatio;
+    }
+
+    public Double getCurrentRatio() {
+        return currentRatio;
+    }
+    public void setCurrentRatio(Double currentRatio) {
+        this.currentRatio = currentRatio;
+    }
+
+    public Double getCashRatio() {
+        return cashRatio;
+    }
+
+    public void setCashRatio(Double cashRatio) {
+        this.cashRatio = cashRatio;
+    }
+
+    public Double getNetAssetValue() {
+        return netAssetValue;
+    }
+
+    public void setNetAssetValue(Double netAssetValue) {
+        this.netAssetValue = netAssetValue;
+    }
+
+    public Double getTotalDebtRatio() {
+        return totalDebtRatio;
+    }
+
+    public void setTotalDebtRatio(Double totalDebtRatio) {
+        this.totalDebtRatio = totalDebtRatio;
+    }
+
+    public Double getDebtEquityRatio() {
+        return debtEquityRatio;
+    }
+
+    public void setDebtEquityRatio(Double debtEquityRatio) {
+        this.debtEquityRatio = debtEquityRatio;
+    }
+
+    public Double getEquityMultiplier() {
+        return equityMultiplier;
+    }
+
+    public void setEquityMultiplier(Double equityMultiplier) {
+        this.equityMultiplier = equityMultiplier;
+    }
+
+    public Double getFinancialLeverageRatio() {
+        return financialLeverageRatio;
+    }
+
+    public void setFinancialLeverageRatio(Double financialLeverageRatio) {
+        this.financialLeverageRatio = financialLeverageRatio;
+    }
+
+    public Double getLongTermDebtRatio() {
+        return longTermDebtRatio;
+    }
+
+    public void setLongTermDebtRatio(Double longTermDebtRatio) {
+        this.longTermDebtRatio = longTermDebtRatio;
+    }
+
+    public Double getReturnOnAssets() {
+        return returnOnAssets;
+    }
+
+    public void setReturnOnAssets(Double returnOnAssets) {
+        this.returnOnAssets = returnOnAssets;
+    }
+
+    public Double getReturnOnEquity() {
+        return returnOnEquity;
+    }
+
+    public void setReturnOnEquity(Double returnOnEquity) {
+        this.returnOnEquity = returnOnEquity;
+    }
+
+    public Double getSharesOutstanding() {
+        return sharesOutstanding;
+    }
+
+    public void setSharesOutstanding(Double sharesOutstanding) {
+        this.sharesOutstanding = sharesOutstanding;
+    }
+
+    public Double getEarningsYield() {
+        return earningsYield;
+    }
+
+    public void setEarningsYield(Double earningsYield) {
+        this.earningsYield = earningsYield;
+    }
+
+    public Double getPriceEarningsRatio() {
+        return priceEarningsRatio;
+    }
+
+    public void setPriceEarningsRatio(Double priceEarningsRatio) {
+        this.priceEarningsRatio = priceEarningsRatio;
     }
 }
 
