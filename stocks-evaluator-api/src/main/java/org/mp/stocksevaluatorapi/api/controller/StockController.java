@@ -24,7 +24,7 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/stock")
     public Stock getStock(@RequestParam String ticker) throws IOException, ParserConfigurationException, SAXException {
         Stock stock = stockService.getStock(ticker);

@@ -1,5 +1,6 @@
 package org.mp.stocksevaluatorapi.service;
 
+import org.mp.stocksevaluatorapi.ExceptionLog;
 import org.mp.stocksevaluatorapi.api.model.BalanceSheet;
 import org.mp.stocksevaluatorapi.api.model.CashFlowStatement;
 import org.mp.stocksevaluatorapi.api.model.IncomeStatement;
@@ -24,45 +25,57 @@ public class StockService {
     }
 
     public Stock getStock(String ticker) throws IOException, ParserConfigurationException, SAXException {
-        FinancialModelingPrep financialModelingPrep = new FinancialModelingPrep();
-        Finnhub finnhub = new Finnhub();
-        Marketstack marketstack = new Marketstack();
-        Stock stockCompany = marketstack.getStockData(ticker);
-        Stock stockPrice = financialModelingPrep.getStockData(ticker);
-        Stock stock = finnhub.getStockData(ticker);
-        stock.setTicker(ticker);
-        stock.setCompany(stockCompany.getCompany());
-        stock.setPrice(stockPrice.getPrice());
-        BalanceSheet balanceSheet = financialModelingPrep.getBalanceSheet(ticker);
-        stock.setBalanceSheet(balanceSheet);
-        IncomeStatement incomeStatement = financialModelingPrep.getIncomeStatement(ticker);
-        stock.setIncomeStatement(incomeStatement);
-        CashFlowStatement cashFlowStatement = financialModelingPrep.getCashFlowStatement(ticker);
-        stock.setCashFlowStatement(cashFlowStatement);
+        Stock stock = new Stock();
 
-        CashFlow cashFlow = setCashFlowCalculations(cashFlowStatement, incomeStatement);
-        stock.setQualityOfIncomeRatio(cashFlow.getQualityOfIncomeRatio());
+        try {
+            Finnhub finnhub = new Finnhub();
+            stock = finnhub.getStockData(ticker);
 
-        Liquidity liquidity = setLiquidityCalculations(balanceSheet);
-        stock.setCurrentRatio(liquidity.getCurrentRatio());
-        stock.setCashRatio(liquidity.getCashRatio());
+            FinancialModelingPrep financialModelingPrep = new FinancialModelingPrep();
+            Stock stockPrice = financialModelingPrep.getStockData(ticker);
+            Stock stockCompany = financialModelingPrep.getStockProfile(ticker);
 
-        FinancialLeverage financialLeverage = setFinancialLeverageCalculations(balanceSheet);
-        stock.setNetAssetValue(financialLeverage.getNetAssetValue());
-        stock.setTotalDebtRatio(financialLeverage.getTotalDebtRatio());
-        stock.setDebtEquityRatio(financialLeverage.getDebtEquityRatio());
-        stock.setEquityMultiplier(financialLeverage.getEquityMultiplier());
-        stock.setFinancialLeverageRatio(financialLeverage.getFinancialLeverageRatio());
-        stock.setLongTermDebtRatio(financialLeverage.getLongTermDebtRatio());
+            stock.setTicker(ticker);
+            stock.setCompany(stockCompany.getCompany());
+            stock.setPrice(stockPrice.getPrice());
 
-        Profitability profitability = setProfitabilityCalculations(balanceSheet, incomeStatement);
-        stock.setReturnOnAssets(profitability.getReturnOnAssets());
-        stock.setReturnOnEquity(profitability.getReturnOnEquity());
+            BalanceSheet balanceSheet = financialModelingPrep.getBalanceSheet(ticker);
+            IncomeStatement incomeStatement = financialModelingPrep.getIncomeStatement(ticker);
+            CashFlowStatement cashFlowStatement = financialModelingPrep.getCashFlowStatement(ticker);
 
-        MarketValue marketValue = setMarketValueCalculations(incomeStatement, stock.getEarningsPerShare(), stock.getPrice());
-        stock.setSharesOutstanding(marketValue.getSharesOutstanding());
-        stock.setEarningsYield(marketValue.getEarningsYield());
-        stock.setPriceEarningsRatio(marketValue.getPriceEarningsRatio());
+            if (balanceSheet != null && incomeStatement != null && cashFlowStatement != null) {
+                stock.setBalanceSheet(balanceSheet);
+                stock.setIncomeStatement(incomeStatement);
+                stock.setCashFlowStatement(cashFlowStatement);
+
+                CashFlow cashFlow = setCashFlowCalculations(cashFlowStatement, incomeStatement);
+                stock.setQualityOfIncomeRatio(cashFlow.getQualityOfIncomeRatio());
+
+                Liquidity liquidity = setLiquidityCalculations(balanceSheet);
+                stock.setCurrentRatio(liquidity.getCurrentRatio());
+                stock.setCashRatio(liquidity.getCashRatio());
+
+                FinancialLeverage financialLeverage = setFinancialLeverageCalculations(balanceSheet);
+                stock.setNetAssetValue(financialLeverage.getNetAssetValue());
+                stock.setTotalDebtRatio(financialLeverage.getTotalDebtRatio());
+                stock.setDebtEquityRatio(financialLeverage.getDebtEquityRatio());
+                stock.setEquityMultiplier(financialLeverage.getEquityMultiplier());
+                stock.setFinancialLeverageRatio(financialLeverage.getFinancialLeverageRatio());
+                stock.setLongTermDebtRatio(financialLeverage.getLongTermDebtRatio());
+
+                Profitability profitability = setProfitabilityCalculations(balanceSheet, incomeStatement);
+                stock.setReturnOnAssets(profitability.getReturnOnAssets());
+                stock.setReturnOnEquity(profitability.getReturnOnEquity());
+
+                MarketValue marketValue = setMarketValueCalculations(incomeStatement, stock.getEarningsPerShare(), stock.getPrice());
+                stock.setSharesOutstanding(marketValue.getSharesOutstanding());
+                stock.setEarningsYield(marketValue.getEarningsYield());
+                stock.setPriceEarningsRatio(marketValue.getPriceEarningsRatio());
+            }
+        } catch (Exception e) {
+            ExceptionLog exceptionLog = new ExceptionLog();
+            exceptionLog.saveException(e);
+        }
 
         return stock;
     }

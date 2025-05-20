@@ -33,5 +33,18 @@ public class Database {
             return null;
         }
     }
+
+    public void executeStatement(String statement) {
+        Connection con = null;
+
+        try {
+            con = DriverManager.getConnection(connectionString);
+            Statement stmt = con.createStatement();
+            String sql = statement;
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            logging.Write(e.getMessage());
+        }
+    }
 }
 
